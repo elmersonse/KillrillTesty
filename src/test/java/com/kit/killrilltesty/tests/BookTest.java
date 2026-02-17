@@ -7,6 +7,8 @@ import io.restassured.RestAssured;
 import io.restassured.common.mapper.TypeRef;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.text.ParseException;
 import java.util.List;
@@ -100,4 +102,14 @@ public class BookTest extends BaseTest {
 				.when()
 				.get("/books/999");
 	}
+
+	@ParameterizedTest
+	@MethodSource("com.kit.killrilltesty.utils.ParametersProviderFactory#getBookStream")
+	public void testCreateBookStream(Book book) {
+		RestAssured.given()
+				.body(book)
+				.when()
+				.post("/books");
+	}
+
 }
