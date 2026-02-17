@@ -5,6 +5,7 @@ import com.kit.killrilltesty.api.specs.ResponseSpec;
 import com.kit.killrilltesty.utils.ModelBuilder;
 import io.restassured.RestAssured;
 import io.restassured.common.mapper.TypeRef;
+import io.restassured.module.jsv.JsonSchemaValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -112,4 +113,15 @@ public class BookTest extends BaseTest {
 				.post("/books");
 	}
 
+	@Test
+	public void testCreateBookValidateSchema() {
+		Book book = ModelBuilder.getBook();
+		RestAssured.given()
+				.body(book)
+				.when()
+				.post("/books")
+				.then()
+				.assertThat()
+				.body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/book_schema.json"));
+	}
 }
