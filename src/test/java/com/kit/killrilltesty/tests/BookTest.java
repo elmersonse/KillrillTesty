@@ -5,7 +5,6 @@ import com.kit.killrilltesty.api.specs.ResponseSpec;
 import com.kit.killrilltesty.utils.ModelBuilder;
 import io.restassured.RestAssured;
 import io.restassured.common.mapper.TypeRef;
-import net.bytebuddy.matcher.StringMatcher;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

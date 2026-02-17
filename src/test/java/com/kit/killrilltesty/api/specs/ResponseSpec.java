@@ -3,8 +3,6 @@ package com.kit.killrilltesty.api.specs;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.ResponseSpecification;
 
-import static org.hamcrest.Matchers.containsString;
-
 public class ResponseSpec {
 
 	public static ResponseSpecification getSpecOk() {
