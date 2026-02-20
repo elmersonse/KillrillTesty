@@ -1,0 +1,28 @@
+package com.kit.killrilltesty.ui.pages;
+
+import lombok.RequiredArgsConstructor;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
+import java.util.Random;
+
+@RequiredArgsConstructor
+public class MainPage {
+
+	private final WebDriver driver;
+
+	private final By addToCartButton = new By.ByXPath("//button[text()='Add to cart']");
+
+	public void addFirstItemToCart() {
+		driver.findElement(addToCartButton).click();
+	}
+
+	public void addRandomItemToCart() {
+		List<WebElement> items = driver.findElements(addToCartButton);
+
+		Random rand = new Random();
+		items.get(rand.nextInt(items.size())).click();
+	}
+}

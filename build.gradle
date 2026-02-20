@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id("io.freefair.lombok") version "9.2.0"
 }
 
 group 'com.kit'
@@ -11,6 +12,8 @@ repositories {
 
 ext {
     junitVersion = '5.11.3'
+    seleniumVersion = '4.40.0'
+    lombokVersion = '1.18.42'
 }
 
 sourceCompatibility = '17'
@@ -21,11 +24,17 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
-    testImplementation('org.seleniumhq.selenium:selenium-java:4.25.0')
-    implementation("org.seleniumhq.selenium:selenium-opera-driver:4.4.0")
+    testImplementation("io.github.bonigarcia:webdrivermanager:6.3.3")
+    testImplementation("org.seleniumhq.selenium:selenium-java:${seleniumVersion}")
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testImplementation "org.projectlombok:lombok:${lombokVersion}"
+    testImplementation("org.junit.jupiter:junit-jupiter-params:${junitVersion}")
+
+
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-params:${junitVersion}")
+
+    annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+
 }
 
 test {
