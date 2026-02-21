@@ -11,7 +11,7 @@ public class CartSteps {
 
 	public CartSteps(WebDriver driver) {
 		this.cartPage = new CartPage(driver);
-		this.commonElements = CommonElements.getInstance(driver);
+		this.commonElements = new CommonElements(driver);
 	}
 
 	public CartSteps removeFirstItem() {

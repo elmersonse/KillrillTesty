@@ -4,21 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
 @RequiredArgsConstructor
 public class CommonElements {
-
-	private static CommonElements instance;
-
-	public static synchronized CommonElements getInstance(WebDriver driver) {
-		if (instance == null) {
-			instance = new CommonElements(driver);
-		}
-		return instance;
-	}
-
 
 	private final WebDriver driver;
 
@@ -40,6 +33,11 @@ public class CommonElements {
 	public boolean isCartCountDisplayed() {
 		List<WebElement> elements = driver.findElements(cartCount);
 		return !elements.isEmpty();
+	}
+
+	public void waitForCartIcon(int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		WebElement e = wait.until(ExpectedConditions.visibilityOfElementLocated(cart));
 	}
 
 }

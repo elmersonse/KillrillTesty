@@ -11,7 +11,7 @@ public class MainSteps {
 
 	public MainSteps(WebDriver driver) {
 		this.mainPage = new MainPage(driver);
-		this.commonElements = CommonElements.getInstance(driver);
+		this.commonElements = new CommonElements(driver);
 	}
 
 	public MainSteps addFirstItemToCart() {
@@ -38,6 +38,11 @@ public class MainSteps {
 
 	public MainSteps openCartPage() {
 		commonElements.openCart();
+		return this;
+	}
+
+	public MainSteps checkRemovedItemButton() {
+		if(!mainPage.checkRemovedItem()) throw new AssertionError("Wrong button :(");
 		return this;
 	}
 }

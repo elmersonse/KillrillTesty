@@ -22,10 +22,10 @@ public class LoginTest extends BaseTest {
 	@MethodSource("driverParamProvider")
 	public void testLoginBrowsers(DriverType driverType) {
 		driverSetUp(driverType);
-
 		loginSteps
 				.enterCredentials("standard_user", "secret_sauce")
 				.clickLoginButton()
+				.waitForCartIcon(10)
 				.checkLoginSuccess();
 	}
 

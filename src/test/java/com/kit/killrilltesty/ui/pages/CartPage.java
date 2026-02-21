@@ -1,5 +1,6 @@
 package com.kit.killrilltesty.ui.pages;
 
+import com.kit.killrilltesty.ui.utils.TestContext;
 import lombok.RequiredArgsConstructor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -15,6 +16,7 @@ public class CartPage {
 
 	private By removeButton = new By.ByXPath("//button[text()='Remove']");
 	private By cartItem = new By.ByXPath("//div[@class='cart_item']");
+	private By cartItemTitle = new By.ByXPath("//div[contains(@class, 'name')]");
 	private By returnButton = new By.ByXPath("//button[text()='Continue Shopping']");
 
 	public void clickFirstRemoveButton() {
@@ -22,10 +24,15 @@ public class CartPage {
 	}
 
 	public void clickRandomRemoveButton() {
+		TestContext context = TestContext.getInstance();
 		List<WebElement> items = driver.findElements(removeButton);
+		List<WebElement> itemNames = driver.findElements(cartItemTitle);
 
 		Random rand = new Random();
-		items.get(rand.nextInt(items.size())).click();
+		int next = rand.nextInt(items.size());
+		String itemName = itemNames.get(next).getText();
+		items.get(next).click();
+		context.setRemovedItemTitle(itemName);
 	}
 
 	public int getCartItemCount() {

@@ -39,6 +39,8 @@ public class MainTest extends BaseTest {
 				.checkItemCount(2)
 				.returnToMainPage();
 
+		mainSteps.checkRemovedItemButton();
+
 
 	}
 
