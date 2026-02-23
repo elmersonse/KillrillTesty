@@ -5,8 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -18,7 +22,10 @@ public class MainPage {
 
 	private final By addToCartButton = new By.ByXPath("//button[text()='Add to cart']");
 	private By itemTitle = new By.ByXPath("//div[contains(@class, 'name')]");
-	private By itemPrice = new By.ByXPath("//div[contains(@class, 'item_price')]");
+	private By itemDescription = new By.ByXPath("//div[@data-test='inventory-item-desc']");
+	private By itemPrice = new By.ByXPath("//div[contains(@data-test, 'price')]");
+	private By itemImage = new By.ByXPath("//div[contains(@class, 'img')]//img");
+	private By itemLink = new By.ByXPath("//div[contains(@class, 'name')]/parent::a");
 	private By selectSort = new By.ByXPath("//select");
 	private By removedItemCardButton;
 
@@ -58,5 +65,30 @@ public class MainPage {
 		WebElement selectElement = driver.findElement(selectSort);
 		Select select = new Select(selectElement);
 		select.selectByIndex(index);
+	}
+
+	public String getItemTitle() {
+		return driver.findElement(itemTitle).getText();
+	}
+
+	public String getItemDescription() {
+		return driver.findElement(itemDescription).getText();
+	}
+
+	public String getItemPrice() {
+		return driver.findElement(itemPrice).getText();
+	}
+
+	public String getItemImgUrl() {
+		return driver.findElement(itemImage).getAttribute("src");
+	}
+
+	public void openItemCardPage() {
+		driver.findElement(itemLink).click();
+	}
+
+	public void waitForPageToLoad(int seconds) {
+		Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(seconds));
+		wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(itemTitle));
 	}
 }

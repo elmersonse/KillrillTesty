@@ -47,6 +47,10 @@ public class CartSteps {
 		cartPage.enterFirstname();
 		cartPage.enterLastname();
 		cartPage.enterPostalCode();
+		return this;
+	}
+
+	public CartSteps confirmPersonalInfo() {
 		cartPage.clickContinueButton();
 		return this;
 	}
@@ -58,6 +62,11 @@ public class CartSteps {
 
 	public CartSteps backToMainPage() {
 		cartPage.clickBackHomeButton();
+		return this;
+	}
+
+	public CartSteps checkErrorBanner() {
+		cartPage.checkErrorBanner();
 		return this;
 	}
 }

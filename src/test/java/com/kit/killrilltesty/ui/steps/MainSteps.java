@@ -2,8 +2,15 @@ package com.kit.killrilltesty.ui.steps;
 
 import com.kit.killrilltesty.ui.pages.CommonElements;
 import com.kit.killrilltesty.ui.pages.MainPage;
+import com.kit.killrilltesty.ui.utils.ItemCardData;
+import com.kit.killrilltesty.ui.utils.TestContext;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,8 +19,10 @@ public class MainSteps {
 
 	private final MainPage mainPage;
 	private final CommonElements commonElements;
+	private final WebDriver driver;
 
 	public MainSteps(WebDriver driver) {
+		this.driver = driver;
 		this.mainPage = new MainPage(driver);
 		this.commonElements = new CommonElements(driver);
 	}
@@ -88,4 +97,25 @@ public class MainSteps {
 	}
 
 
+	public MainSteps saveMainPageItemData() {
+		TestContext context = TestContext.getInstance();
+		ItemCardData data = ItemCardData.builder()
+				.title(mainPage.getItemTitle())
+				.description(mainPage.getItemDescription())
+				.imageUrl(mainPage.getItemImgUrl())
+				.price(mainPage.getItemPrice())
+				.build();
+		context.setMainPageItemData(data);
+		return this;
+	}
+
+	public MainSteps openItemPage() {
+		mainPage.openItemCardPage();
+		return this;
+	}
+
+	public MainSteps waitForPageToLoad(int seconds) {
+		mainPage.waitForPageToLoad(seconds);
+		return this;
+	}
 }

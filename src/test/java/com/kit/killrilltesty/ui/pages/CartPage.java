@@ -25,6 +25,7 @@ public class CartPage {
 	private By continueButton = new By.ByXPath("//input[@value='Continue']");
 	private By finishButton = new By.ByXPath("//button[text()='Finish']");
 	private By backHomeButton = new By.ByXPath("//button[text()='Back Home']");
+	private By errorBanner = new By.ByXPath("//div[contains(@class, 'error')]");
 
 	public void clickFirstRemoveButton() {
 		driver.findElement(removeButton).click();
@@ -76,5 +77,9 @@ public class CartPage {
 
 	public void clickBackHomeButton() {
 		driver.findElement(backHomeButton).click();
+	}
+
+	public void checkErrorBanner() {
+		driver.findElement(errorBanner);
 	}
 }

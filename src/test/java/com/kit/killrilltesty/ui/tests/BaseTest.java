@@ -1,10 +1,11 @@
 package com.kit.killrilltesty.ui.tests;
 
 import com.kit.killrilltesty.ui.steps.CartSteps;
+import com.kit.killrilltesty.ui.steps.ItemCardSteps;
 import com.kit.killrilltesty.ui.steps.LoginSteps;
 import com.kit.killrilltesty.ui.steps.MainSteps;
 import com.kit.killrilltesty.ui.utils.DriverType;
-import com.kit.killrilltesty.ui.utils.TestContext;
+import com.kit.killrilltesty.ui.utils.UserType;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -24,6 +25,7 @@ public class BaseTest {
 	protected LoginSteps loginSteps;
 	protected MainSteps mainSteps;
 	protected CartSteps cartSteps;
+	protected ItemCardSteps itemCardSteps;
 
 
 	private final String baseUrl = "https://www.saucedemo.com/";
@@ -57,6 +59,7 @@ public class BaseTest {
 		loginSteps = new LoginSteps(driver);
 		mainSteps = new MainSteps(driver);
 		cartSteps = new CartSteps(driver);
+		itemCardSteps = new ItemCardSteps(driver);
 		driver.get(baseUrl);
 	}
 
@@ -65,9 +68,19 @@ public class BaseTest {
 		driver.quit();
 	}
 
-	public void loginAsStandardUser() {
-		loginSteps
-				.enterCredentials("standard_user", "secret_sauce")
-				.clickLoginButton();
+	public void loginAsUser(UserType type) {
+		switch (type) {
+			case STANDARD -> {
+				loginSteps
+						.enterCredentials("standard_user", "secret_sauce")
+						.clickLoginButton();
+			}
+			case PERFORMANCE_GLITCH -> {
+				loginSteps
+						.enterCredentials("performance_glitch_user", "secret_sauce")
+						.clickLoginButton();
+			}
+		}
+
 	}
 }
