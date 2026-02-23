@@ -18,6 +18,13 @@ public class CartPage {
 	private By cartItem = new By.ByXPath("//div[@class='cart_item']");
 	private By cartItemTitle = new By.ByXPath("//div[contains(@class, 'name')]");
 	private By returnButton = new By.ByXPath("//button[text()='Continue Shopping']");
+	private By checkoutButton = new By.ByXPath("//button[text()='Checkout']");
+	private By firstnameInput = new By.ByXPath("//input[@name='firstName']");
+	private By lastnameInput = new By.ByXPath("//input[@name='lastName']");
+	private By postalCodeInput = new By.ByXPath("//input[@name='postalCode']");
+	private By continueButton = new By.ByXPath("//input[@value='Continue']");
+	private By finishButton = new By.ByXPath("//button[text()='Finish']");
+	private By backHomeButton = new By.ByXPath("//button[text()='Back Home']");
 
 	public void clickFirstRemoveButton() {
 		driver.findElement(removeButton).click();
@@ -41,5 +48,33 @@ public class CartPage {
 
 	public void clickReturnButton() {
 		driver.findElement(returnButton).click();
+	}
+
+	public void clickCheckoutButton() {
+		driver.findElement(checkoutButton).click();
+	}
+
+	public void enterFirstname() {
+		driver.findElement(firstnameInput).sendKeys("John");
+	}
+
+	public void enterLastname() {
+		driver.findElement(lastnameInput).sendKeys("Doe");
+	}
+
+	public void enterPostalCode() {
+		driver.findElement(postalCodeInput).sendKeys("246000");
+	}
+
+	public void clickContinueButton() {
+		driver.findElement(continueButton).click();
+	}
+
+	public void clickFinishButton() {
+		driver.findElement(finishButton).click();
+	}
+
+	public void clickBackHomeButton() {
+		driver.findElement(backHomeButton).click();
 	}
 }

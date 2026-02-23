@@ -40,8 +40,42 @@ public class MainTest extends BaseTest {
 				.returnToMainPage();
 
 		mainSteps.checkRemovedItemButton();
-
-
 	}
 
+	@Test
+	public void testOrderHappyPath() {
+		driverSetUp(DriverType.CHROME);
+		loginAsStandardUser();
+
+		mainSteps
+				.addRandomItemToCart()
+				.addRandomItemToCart()
+				.checkCartCount(2)
+				.openCartPage();
+
+		cartSteps
+				.ckeckout()
+				.enterPersonalInfo()
+				.finishOrder()
+				.backToMainPage();
+
+		mainSteps.checkCartCount(0);
+	}
+
+	@Test
+	public void testSorting() {
+		driverSetUp(DriverType.CHROME);
+		loginAsStandardUser();
+
+		mainSteps
+				.selectSortMethod(0)
+				.checkSortByNameAZ()
+				.selectSortMethod(1)
+				.checkSortByNameZA()
+				.selectSortMethod(2)
+				.checkSorByPriceAsc()
+				.selectSortMethod(3)
+				.checkSorByPriceDesc();
+
+	}
 }

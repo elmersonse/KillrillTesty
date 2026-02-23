@@ -36,4 +36,28 @@ public class CartSteps {
 		cartPage.clickReturnButton();
 		return this;
 	}
+
+	public CartSteps ckeckout() {
+		cartPage.clickCheckoutButton();
+		return this;
+	}
+
+
+	public CartSteps enterPersonalInfo() {
+		cartPage.enterFirstname();
+		cartPage.enterLastname();
+		cartPage.enterPostalCode();
+		cartPage.clickContinueButton();
+		return this;
+	}
+
+	public CartSteps finishOrder() {
+		cartPage.clickFinishButton();
+		return this;
+	}
+
+	public CartSteps backToMainPage() {
+		cartPage.clickBackHomeButton();
+		return this;
+	}
 }
