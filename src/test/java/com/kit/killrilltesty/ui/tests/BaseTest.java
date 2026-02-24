@@ -7,19 +7,35 @@ import com.kit.killrilltesty.ui.steps.MainSteps;
 import com.kit.killrilltesty.ui.utils.DriverType;
 import com.kit.killrilltesty.ui.utils.UserType;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.Attachment;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.extension.TestWatcher;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class BaseTest {
+
+	private Path screenshotDir;
 
 	protected WebDriver driver;
 	protected LoginSteps loginSteps;
@@ -30,11 +46,48 @@ public class BaseTest {
 
 	private final String baseUrl = "https://www.saucedemo.com/";
 
+	@RegisterExtension
+	TestWatcher testWatcher = new TestWatcher() {
+		@Override
+		public void testFailed(ExtensionContext context, Throwable cause) {
+			try {
+				if (driver != null) {
+					String testName = context.getDisplayName();
+					Path screenshotPath = screenshotDir.resolve(testName + ".png");
+
+					File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+					FileUtils.copyFile(screenshot, new File(screenshotPath.toUri()));
+
+					saveToAllure(screenshot, testName);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		@Attachment(value = "Скриншот при падении теста {testName}", type = "image/png")
+		private byte[] saveToAllure(File screenshot, String testName) throws IOException {
+			return Files.readAllBytes(screenshot.toPath());
+		}
+	};
+
+
+
 	@BeforeAll
 	public static void setup() {
 		WebDriverManager.chromedriver().setup();
 		WebDriverManager.firefoxdriver().setup();
 		WebDriverManager.edgedriver().setup();
+	}
+
+	@BeforeEach
+	public void setUp() {
+		screenshotDir = Paths.get("screenshots/");
+		try {
+			Files.createDirectories(screenshotDir);
+		} catch (IOException e) {
+			throw new UncheckedIOException(e);
+		}
 	}
 
 	/**
@@ -52,6 +105,11 @@ public class BaseTest {
 				options.setExperimentalOption("prefs", chromePrefs);
 				yield new ChromeDriver(options);
 			}
+			case CHROME_HEADLESS -> {
+				ChromeOptions options = new ChromeOptions();
+				options.addArguments("--headless=new");
+				yield new ChromeDriver(options);
+			}
 		};
 
 		driver.manage().window().maximize();
@@ -65,7 +123,7 @@ public class BaseTest {
 
 	@AfterEach
 	void tearDown() {
-		driver.quit();
+		//driver.quit();
 	}
 
 	public void loginAsUser(UserType type) {

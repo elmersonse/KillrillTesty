@@ -3,5 +3,6 @@ package com.kit.killrilltesty.ui.utils;
 public enum DriverType {
 	CHROME,
 	FIREFOX,
-	EDGE
+	EDGE,
+	CHROME_HEADLESS
 }

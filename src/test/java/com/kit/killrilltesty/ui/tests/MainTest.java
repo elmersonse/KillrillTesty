@@ -2,6 +2,8 @@ package com.kit.killrilltesty.ui.tests;
 
 import com.kit.killrilltesty.ui.utils.DriverType;
 import com.kit.killrilltesty.ui.utils.UserType;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -10,6 +12,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class MainTest extends BaseTest {
 
 	@Test
+	@Feature("Корзина")
+	@Description("Добавить первый товар в корзину, проверить, что счётчик изменился; убрать товар, проверить счётчик")
 	public void testOneItemCart() {
 		driverSetUp(DriverType.CHROME);
 		loginAsUser(UserType.STANDARD);
@@ -24,6 +28,8 @@ public class MainTest extends BaseTest {
 	}
 
 	@Test
+	@Feature("Корзина")
+	@Description("Добавить 3 случайных товара в корзину, проверить, что счётчик изменился после каждого; убрать товар, проверить счётчик, проверить кнопку на главной")
 	public void testRandomItemsCart() {
 		driverSetUp(DriverType.CHROME);
 		loginAsUser(UserType.STANDARD);
@@ -47,6 +53,8 @@ public class MainTest extends BaseTest {
 	}
 
 	@Test
+	@Feature("Заказ")
+	@Description("'Happy path' оформления заказа")
 	public void testOrderHappyPath() {
 		driverSetUp(DriverType.CHROME);
 		loginAsUser(UserType.STANDARD);
@@ -68,6 +76,8 @@ public class MainTest extends BaseTest {
 	}
 
 	@Test
+	@Feature("Главная страница")
+	@Description("Проверка методов сортировки на главной")
 	public void testSorting() {
 		driverSetUp(DriverType.CHROME);
 		loginAsUser(UserType.STANDARD);
@@ -85,6 +95,8 @@ public class MainTest extends BaseTest {
 	}
 
 	@Test
+	@Feature("Главная страница")
+	@Description("Сравнить данные товара на главной и на странице товара")
 	public void testItemDataComparison() {
 		driverSetUp(DriverType.CHROME);
 		loginAsUser(UserType.STANDARD);
@@ -99,6 +111,8 @@ public class MainTest extends BaseTest {
 	}
 
 	@Test
+	@Feature("Заказ")
+	@Description("Проверить оформление заказа с пустыми персональными данными")
 	public void testOrderWithoutPersonalData() {
 		driverSetUp(DriverType.CHROME);
 		loginAsUser(UserType.STANDARD);
@@ -116,10 +130,12 @@ public class MainTest extends BaseTest {
 
 	@ParameterizedTest
 	@EnumSource(UserType.class)
+	@Feature("Бизнес приколы хз")
+	@Description("Бизнес-сценарии для standard и performance-glitch юзеров")
 	public void testBusinessScenarios(UserType userType) {
 		driverSetUp(DriverType.CHROME);
 		loginAsUser(userType);
-
+		
 		mainSteps
 				.waitForPageToLoad(20)
 				.addRandomItemToCart()

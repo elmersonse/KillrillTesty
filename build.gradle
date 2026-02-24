@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id("io.freefair.lombok") version "9.2.0"
+    id("io.qameta.allure") version "3.0.2"
 }
 
 group 'com.kit'
@@ -29,7 +30,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testImplementation "org.projectlombok:lombok:${lombokVersion}"
     testImplementation("org.junit.jupiter:junit-jupiter-params:${junitVersion}")
-
+    testImplementation("io.qameta.allure:allure-junit5:2.33.0")
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 
